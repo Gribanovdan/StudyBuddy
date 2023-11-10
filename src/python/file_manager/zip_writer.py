@@ -6,20 +6,22 @@ from file_manager.txt_writer import TxtWriter
 from common.classes import Task
 
 class ZipWriter:
-    def __init__(self, work_name: str) -> None:
-        self._work_name = work_name
-        self._max_ind = 0
+    _max_ind = 0
+    
+    def __init__(self) -> None:
         self._txt_writer = TxtWriter()
         self._task_zips = []
 
-    def new_zip(self):
-        file_name = str(self._max_ind) + '.zip'
+    def new_zip(self, work_name: str) -> str:
+        file_name = str(ZipWriter._max_ind) + '.zip'
         self._zip_file_path = get_data_path(file_name)
         ensure_dir(self._zip_file_path)
-        zipf = self._cur_opened_zip = zipfile.ZipFile(self._zip_file_path, 'w') 
-        workname_file_path, workname_file_name = self._txt_writer.create_workname_file(self._work_name)
+        zipf = self._cur_opened_zip = zipfile.ZipFile(self._zip_file_path, 'w')
+        ZipWriter._max_ind += 1
+        workname_file_path, workname_file_name = self._txt_writer.create_workname_file(work_name)
         zipf.write(workname_file_path, workname_file_name)
         self._txt_writer.delete_all_created_files()
+        return self._zip_file_path
         
     def new_task(self, task: Task):
         file_name = 'task' + str(task.ind) + '.zip'
@@ -49,11 +51,3 @@ class ZipWriter:
             self._txt_writer.delete_all_created_files()
         self._cur_opened_zip.write(zip_path, file_name)
         os.remove(zip_path)
-
-
-
-z = ZipWriter('work_one')
-z.new_zip()
-task = Task(0, title='TITLE', question='3 + 5', tip='Think harder', answer='8', comment='It was easy.')
-z.new_task(task)
-z._cur_opened_zip.close()

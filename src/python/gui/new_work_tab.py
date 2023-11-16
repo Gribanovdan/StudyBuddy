@@ -31,13 +31,13 @@ class NewWorkTab(QWidget):
 
         self._work_name_line_edit = work_name_line_edit = QLineEdit()
         work_name_line_edit.textChanged.connect(self.on_work_name_changed)
-        work_name_line_edit.setFont(styles.ReqularFont)
+        work_name_line_edit.setFont(styles.RegularFont)
         work_name_line_edit.setFixedWidth(500)
         work_name_line_edit.setAlignment(Qt.AlignmentFlag.AlignCenter)
         v_layout.addWidget(work_name_line_edit, alignment=Qt.AlignmentFlag.AlignCenter)
 
         work_name_status_label = QLabel('')
-        work_name_status_label.setFont(styles.ReqularFont)
+        work_name_status_label.setFont(styles.RegularFont)
         work_name_status_label.setStyleSheet(styles.GreenColor)
         work_name_status_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.work_name_status_label = work_name_status_label
@@ -83,4 +83,3 @@ class NewWorkTab(QWidget):
             self._work_name_line_edit.setText('')
             self.edit_window = new_window = edit_work_window.EditWorkWindow(work_name, zip_file_path)
             new_window.show()
-            print('expected to be shown')

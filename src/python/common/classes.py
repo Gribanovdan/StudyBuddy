@@ -1,7 +1,6 @@
 import typing as t
 
 
-
 class Task:
     def __init__(self,
                  ind: int,
@@ -26,3 +25,9 @@ class Task:
         self.comment = comment
         self.comment_images = comment_images
         
+
+
+class Work:
+    def __init__(self, ind: int, title: str):
+        self.ind = ind
+        self.title = title
